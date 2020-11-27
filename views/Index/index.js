@@ -1,15 +1,24 @@
 import React from "react";
-import MainButton from "../../components/MainButton";
+import { NativeRouter, Route } from "react-router-native";
+import Header from "../../components/Header";
 import Layout from "../../components/Layout/";
-import { Text } from "react-native";
-import styled from "styled-components";
+import Home from "../Home";
 
 const Index = () => {
   return (
-    <Layout>
-      <MainButton isGreen={false} text={"Widzę"} />
-      <MainButton isGreen text={"Widzę"} />
-    </Layout>
+    <NativeRouter>
+      <Layout>
+        <Header />
+
+        <Route exact path="/" component={Home} />
+        {/* <Route path="/moje-zgłoszenia" component={MySubmissions} />
+      <Route path="/ustawienia" component={Settings} />
+      <Route path="/moje-konto" component={MyAccount} />
+      <Route path="/logowanie" component={Login} />
+      <Route path="/rejestracja" component={Register} />
+      <Route path="/wyloguj-sie" component={LogOut} /> */}
+      </Layout>
+    </NativeRouter>
   );
 };
 

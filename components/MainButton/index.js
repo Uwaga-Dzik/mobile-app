@@ -12,6 +12,8 @@ const StyledButton = styled.TouchableOpacity`
   border-radius: 18px;
   font-weight: ${({ theme }) => theme.fonts.bold};
   font-size: 16px;
+  z-index: -1;
+  ${({ theme }) => theme.mixins.center}
 
   :focus {
     outline: 0;
