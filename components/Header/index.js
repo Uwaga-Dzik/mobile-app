@@ -4,11 +4,12 @@ import styled from "styled-components";
 import Menu from "../Menu";
 
 const StyledHeader = styled.View`
-  width: 100%;
-  height: 40px;
+  /* width: 100%; */
+  height: 8%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  margin: 0 15px;
+  justify-content: space-evenly;
 `;
 
 const Header = () => {

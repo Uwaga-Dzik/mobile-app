@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
+import posed from "react-native-pose";
+
+// const PosedHamburgerTop = posed.View({
+
+// })
 
 const StyledHamburger = styled.TouchableHighlight`
   position: relative;
@@ -29,9 +34,13 @@ const StyledHamburgerBottom = styled.View`
   border-radius: 18px;
 `;
 
-const Hamburger = ({ isOpen }) => {
+const Hamburger = ({ isOpen, setIsOpen }) => {
+  const handlePress = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <StyledHamburger>
+    <StyledHamburger onPress={handlePress}>
       <>
         <StyledHamburgerTop></StyledHamburgerTop>
         <StyledHamburgerBottom></StyledHamburgerBottom>
@@ -42,10 +51,12 @@ const Hamburger = ({ isOpen }) => {
 
 Hamburger.propTypes = {
   isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func,
 };
 
 Hamburger.defaultProps = {
   isOpen: false,
+  setIsOpen: () => {},
 };
 
 export default Hamburger;

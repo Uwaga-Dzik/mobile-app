@@ -5,7 +5,7 @@ import Hamburger from "./Hamburger";
 import LinksBox from "./LinksBox";
 
 const StyledMenu = styled.View`
-  width: 100%;
+  /* width: 100%; */
   flex-direction: column;
 `;
 
@@ -14,8 +14,8 @@ const Menu = () => {
 
   return (
     <StyledMenu>
-      <Hamburger isOpen={isOpen} />
-      <LinksBox />
+      <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
+      <LinksBox isOpen={isOpen} setIsOpen={setIsOpen} />
     </StyledMenu>
   );
 };
