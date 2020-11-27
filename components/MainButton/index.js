@@ -7,11 +7,9 @@ const StyledButton = styled.TouchableOpacity`
     isGreen
       ? ({ theme }) => theme.colors.green
       : ({ theme }) => theme.colors.orange};
-  padding: 10px 20px;
+  padding: 25px 30px;
   border: none;
   border-radius: 18px;
-  font-weight: ${({ theme }) => theme.fonts.bold};
-  font-size: 16px;
   ${({ theme }) => theme.mixins.center}
 
   :focus {
@@ -21,6 +19,8 @@ const StyledButton = styled.TouchableOpacity`
 
 const StyledLabel = styled.Text`
   color: ${({ theme }) => theme.colors.white};
+  font-weight: bold;
+  font-size: 22px;
 `;
 
 const MainButton = ({ isGreen, text }) => {
