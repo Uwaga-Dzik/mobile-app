@@ -1,14 +1,14 @@
 import React from "react";
 import { NativeRouter, Route } from "react-router-native";
+import Header from "../../components/Header";
 import Layout from "../../components/Layout/";
-import Menu from "../../components/Menu";
 import Home from "../Home";
 
 const Index = () => {
   return (
     <NativeRouter>
       <Layout>
-        <Menu />
+        <Header />
 
         <Route exact path="/" component={Home} />
         {/* <Route path="/moje-zgłoszenia" component={MySubmissions} />
