@@ -1,39 +1,43 @@
 import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
-import { Button } from "react-native";
 
-const StyledButton = styled.Button`
+const StyledButton = styled.TouchableOpacity`
   background-color: ${({ isGreen }) =>
     isGreen
       ? ({ theme }) => theme.colors.green
       : ({ theme }) => theme.colors.orange};
-  padding: 1rem 2rem;
+  padding: 10px 20px;
   border: none;
   border-radius: 18px;
-  color: ${({ theme }) => theme.colors.white};
   font-weight: ${({ theme }) => theme.fonts.bold};
-  font-size: 2;
+  font-size: 16px;
 
   :focus {
     outline: 0;
   }
 `;
 
-const MainButton = ({ isGreen, children }) => {
-  return <StyledButton isGreen={isGreen}>{children}</StyledButton>;
+const StyledLabel = styled.Text`
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const MainButton = ({ isGreen, text }) => {
+  return (
+    <StyledButton isGreen={isGreen}>
+      <StyledLabel>{text}</StyledLabel>
+    </StyledButton>
+  );
 };
 
 MainButton.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
   isGreen: PropTypes.bool,
+  text: PropTypes.string,
 };
 
 MainButton.defaultProps = {
   isGreen: true,
+  text: "",
 };
 
 export default MainButton;
