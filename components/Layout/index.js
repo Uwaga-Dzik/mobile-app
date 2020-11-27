@@ -6,7 +6,6 @@ import { Platform, StatusBar } from "react-native";
 const StyledWrapper = styled.SafeAreaView`
   min-height: 100%;
   width: 100%;
-  flex: 1;
   flex-direction: column;
   paddingTop: ${Platform.OS === "android" ? StatusBar.currentHeight : 0}
 `;
