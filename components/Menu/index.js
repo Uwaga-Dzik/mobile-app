@@ -1,25 +1,21 @@
-import React from "react";
-import { Text, View } from "react-native";
-import { Link } from "react-router-native";
+import React, { useState } from "react";
+
 import styled from "styled-components";
 import Hamburger from "./Hamburger";
+import LinksBox from "./LinksBox";
 
 const StyledMenu = styled.View`
-  width: 100%;
+  /* width: 100%; */
   flex-direction: column;
 `;
 
 const Menu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <StyledMenu>
-      <Hamburger />
-
-      <Link to="/">
-        <Text>Strona główna</Text>
-      </Link>
-      <Link to="/dzikopedia">
-        <Text>Dzikopedia</Text>
-      </Link>
+      <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
+      <LinksBox isOpen={isOpen} setIsOpen={setIsOpen} />
     </StyledMenu>
   );
 };

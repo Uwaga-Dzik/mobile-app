@@ -1,30 +1,62 @@
+import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
-import { Text } from "react-native";
+import posed from "react-native-pose";
+
+// const PosedHamburgerTop = posed.View({
+
+// })
 
 const StyledHamburger = styled.TouchableHighlight`
   position: relative;
-  width: 30px;
-  height: 3px;
-  background-color: ${({ theme }) => theme.colors.black};
-
-  ::before {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 0;
-    width: 30px;
-    height: 3px;
-    background-color: ${({ theme }) => theme.colors.orange};
-  }
+  height: 25px;
+  width: 40px;
+  padding: 0 0;
 `;
 
-const Hamburger = () => {
+const StyledHamburgerTop = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 5px;
+  background-color: ${({ theme }) => theme.colors.black};
+  border-radius: 18px;
+`;
+
+const StyledHamburgerBottom = styled.View`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 5px;
+  background-color: ${({ theme }) => theme.colors.black};
+  border-radius: 18px;
+`;
+
+const Hamburger = ({ isOpen, setIsOpen }) => {
+  const handlePress = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <StyledHamburger>
-      <Text>Menu</Text>
+    <StyledHamburger onPress={handlePress}>
+      <>
+        <StyledHamburgerTop></StyledHamburgerTop>
+        <StyledHamburgerBottom></StyledHamburgerBottom>
+      </>
     </StyledHamburger>
   );
+};
+
+Hamburger.propTypes = {
+  isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func,
+};
+
+Hamburger.defaultProps = {
+  isOpen: false,
+  setIsOpen: () => {},
 };
 
 export default Hamburger;

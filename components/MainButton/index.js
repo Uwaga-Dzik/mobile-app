@@ -10,6 +10,10 @@ const StyledButton = styled.TouchableOpacity`
   padding: 25px 30px;
   border: none;
   border-radius: 18px;
+  font-weight: ${({ theme }) => theme.fonts.bold};
+  font-size: 16px;
+  z-index: -1;
+
   ${({ theme }) => theme.mixins.center}
 
   :focus {
