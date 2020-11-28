@@ -1,10 +1,11 @@
+
 import React, {Fragment, useEffect, useState, useRef} from "react";
 import MapView, {PROVIDER_GOOGLE, Marker, Circle} from "react-native-maps";
 import * as Location from "expo-location";
-import {StyleSheet, Text, View, ActivityIndicator, Image} from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator, Image } from "react-native";
 import device from "../../utils/device";
 
-const GEOLOCATION_OPTIONS = {enableHighAccuracy: true, distanceInterval: 10};
+const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, distanceInterval: 10 };
 
 const Map = (props) => {
     const [location, setLocation] = useState({
