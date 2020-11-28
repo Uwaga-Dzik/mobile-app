@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import React, {useState} from "react";
+import {TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import MainButton from "../../components/MainButton";
 
 import Map from "../../components/Map";
@@ -28,6 +28,7 @@ const StyledDialogContainer = styled.View`
 `;
 
 const Home = () => {
+
   const [isBoar, setIsBoar] = useState(false);
   const [isFootPrints, setIsFootPrint] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState({});
@@ -68,11 +69,12 @@ const Home = () => {
 
       {showMarkerDialog ? (
         <StyledDialogContainer>
-          <MarkerDialog marker={selectedMarker} />
+          <MarkerDialog marker={selectedMarker} onCloseClicked={() => setShowMarkerDialog(false)}/>
         </StyledDialogContainer>
       ) : null}
     </View>
   );
+
 };
 
 export default Home;

@@ -35,8 +35,7 @@ const Search = ({ mapActions }) => {
     Location.geocodeAsync(text)
       .then((resp) => {
         if (resp.length > 0) {
-          const respArr = Object.values(...resp);
-          mapActions.navigateToRegion(respArr[0], respArr[1]);
+          mapActions.navigateToRegion(resp[0].latitude, resp[0].longitude);
         } else {
           console.log("Nie znaleziono lokalizacji");
         }
