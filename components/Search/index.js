@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import * as Location from "expo-location";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as mapActions from "../../redux/actions/MapActions";
 
 const StyledSearch = styled.View`
   width: 60%;
@@ -24,8 +28,21 @@ const StyledInput = styled.TextInput`
   font-size: 16px;
 `;
 
-const Search = () => {
+const Search = ({ mapActions }) => {
   const [text, setText] = useState("");
+
+  const handleSearch = () => {
+    Location.geocodeAsync(text)
+      .then((resp) => {
+        if (resp.length > 0) {
+          const respArr = Object.values(...resp);
+          mapActions.navigateToRegion(respArr[0], respArr[1]);
+        } else {
+          console.log("Nie znaleziono lokalizacji");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <StyledSearch>
@@ -33,12 +50,19 @@ const Search = () => {
         onChangeText={(text) => setText(text)}
         value={text}
         placeholder={"Wyszukaj lokalizacje"}
+        onSubmitEditing={handleSearch}
       />
-      <StyledButton>
+      <StyledButton onPress={handleSearch}>
         <StyledIcon source={require("../../assets/icons/search.png")} />
       </StyledButton>
     </StyledSearch>
   );
 };
 
-export default Search;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    mapActions: bindActionCreators(mapActions, dispatch),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Search);

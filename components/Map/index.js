@@ -68,13 +68,14 @@ const Map = () => {
 
   const onMapPress = (event) => {
     let newMarkers = [...markers];
-    newMarkers.push(
-          {
-            coords: { latitude: event.coordinate.latitude, longitude: event.coordinate.longitude },
-            title: `Marker ${markers.length + 1}`,
-            description: `Desc ${markers.length + 1}`,
-          },
-    );
+    newMarkers.push({
+      coords: {
+        latitude: event.coordinate.latitude,
+        longitude: event.coordinate.longitude,
+      },
+      title: `Marker ${markers.length + 1}`,
+      description: `Desc ${markers.length + 1}`,
+    });
     setMarkers(newMarkers);
   };
 
@@ -96,15 +97,19 @@ const Map = () => {
         onRegionChangeComplete={onRegionChangeComplete}
         style={{ width: "100%", height: "100%", position: "relative" }}
         region={currentRegion}
-        onPress={e => onMapPress(e.nativeEvent)}
+        onPress={(e) => onMapPress(e.nativeEvent)}
       >
         {markers.map((marker, index) => (
           <Marker
             key={index}
             coordinate={marker.coords}
             title={marker.title}
-            description={marker.description}>
-            <Image source={require('../../assets/logo/logo.png')} style={{height: 50, width: 50 }} />
+            description={marker.description}
+          >
+            <Image
+              source={require("../../assets/logo/logo.png")}
+              style={{ height: 50, width: 50 }}
+            />
           </Marker>
         ))}
       </MapView>
@@ -112,11 +117,12 @@ const Map = () => {
   } else
     return (
       <View style={styles.loadingContainer}>
-          <ActivityIndicator
-              animating = {true}
-              color = '#F9650C'
-              size={80}
-              style = {styles.activityIndicator}/>
+        <ActivityIndicator
+          animating={true}
+          color="#F9650C"
+          size={80}
+          style={styles.activityIndicator}
+        />
       </View>
     );
 };
@@ -139,17 +145,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   loadingContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     position: "relative",
-    width: '100%',
-    height: '100%'
+    width: "100%",
+    height: "100%",
   },
   activityIndicator: {
     width: 100,
     height: 100,
-    paddingBottom: 350
-  }
+    paddingBottom: 350,
+  },
 });
 
 export default Map;

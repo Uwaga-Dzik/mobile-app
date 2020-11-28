@@ -6,25 +6,41 @@ import LinksBox from "../../components/Menu/LinksBox";
 import Dzikopedia from "../Dzikopedia";
 import Home from "../Home";
 
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
+import { createLogger } from "redux-logger";
+import PromiseMiddleware from "redux-promise-middleware";
+import rootReducer from "../../redux/store";
+import { Provider } from "react-redux";
+
+const loggerMiddleware = createLogger();
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk, loggerMiddleware, PromiseMiddleware)
+);
+
 const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <NativeRouter>
-      <Layout>
-        <Header isOpen={isOpen} setIsOpen={setIsOpen} />
-        <LinksBox isOpen={isOpen} setIsOpen={setIsOpen} />
+    <Provider store={store}>
+      <NativeRouter>
+        <Layout>
+          <Header isOpen={isOpen} setIsOpen={setIsOpen} />
+          <LinksBox isOpen={isOpen} setIsOpen={setIsOpen} />
 
-        <Route exact path="/" component={Home} />
-        <Route exact path="/dzikopedia" component={Dzikopedia} />
-        {/* <Route path="/moje-zgłoszenia" component={MySubmissions} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/dzikopedia" component={Dzikopedia} />
+          {/* <Route path="/moje-zgłoszenia" component={MySubmissions} />
       <Route path="/ustawienia" component={Settings} />
       <Route path="/moje-konto" component={MyAccount} />
       <Route path="/logowanie" component={Login} />
       <Route path="/rejestracja" component={Register} />
       <Route path="/wyloguj-sie" component={LogOut} /> */}
-      </Layout>
-    </NativeRouter>
+        </Layout>
+      </NativeRouter>
+    </Provider>
   );
 };
 
