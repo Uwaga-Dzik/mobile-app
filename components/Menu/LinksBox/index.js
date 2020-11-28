@@ -47,7 +47,7 @@ const StyledHamburgerWrapper = styled.View`
   position: absolute;
   right: 0;
   margin: 20px;
-  z-index: 2;
+  z-index: 5;
 `;
 
 const StyledName = styled.View`
@@ -116,9 +116,6 @@ const LinksBox = ({ isOpen, setIsOpen }) => {
   return (
     <StyledLinksBox isOpen={isOpen} pose={isOpen ? "open" : "close"}>
       <StyledHeader>
-        <StyledHamburgerWrapper>
-          <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
-        </StyledHamburgerWrapper>
 
         <StyledName>
           <StyledImage>
@@ -131,6 +128,11 @@ const LinksBox = ({ isOpen, setIsOpen }) => {
             <StyledHelloText isBold>Angelika! 😀</StyledHelloText>
           </StyledHello>
         </StyledName>
+
+
+        <StyledHamburgerWrapper>
+          <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
+        </StyledHamburgerWrapper>
       </StyledHeader>
 
       <StyledLinks>

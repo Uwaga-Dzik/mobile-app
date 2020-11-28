@@ -4,3 +4,10 @@ export function navigateToRegion(latitude, longtitude) {
     payload: { lat: latitude, lng: longtitude },
   };
 }
+
+export function selectMarker(marker) {
+  return {
+    type: "SELECT_MARKER",
+    payload: marker,
+  };
+}

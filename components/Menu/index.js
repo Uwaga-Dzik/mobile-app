@@ -9,7 +9,7 @@ const StyledMenu = styled.View`
 const Menu = ({ isOpen, setIsOpen }) => {
   return (
     <StyledMenu>
-      <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} inHeader={true} />
     </StyledMenu>
   );
 };
