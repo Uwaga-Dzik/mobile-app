@@ -80,7 +80,7 @@ const StyledHelloText = styled.Text`
 
 const StyledLinks = styled.View`
   display: flex;
-  margin-left: 33%;
+  margin-left: 25%;
   margin-top: 10%;
 `;
 
@@ -88,6 +88,22 @@ const StyledLinkText = styled.Text`
   color: ${({ theme }) => theme.colors.black};
   font-size: 20px;
   padding: 10px 0;
+`;
+
+const StyledLinkItem = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const StyledIcon = styled.Image`
+  width: 20px;
+  height: 20px;
+  margin-right: 5%;
+`;
+
+const StyledAvatar = styled.Image`
+  border-radius: 16px;
 `;
 
 const LinksBox = ({ isOpen, setIsOpen }) => {
@@ -106,7 +122,9 @@ const LinksBox = ({ isOpen, setIsOpen }) => {
 
         <StyledName>
           <StyledImage>
-            <Text>IMG</Text>
+            <StyledAvatar
+              source={require("../../../assets/icons/avatar.png")}
+            />
           </StyledImage>
           <StyledHello>
             <StyledHelloText>Witaj,</StyledHelloText>
@@ -125,7 +143,19 @@ const LinksBox = ({ isOpen, setIsOpen }) => {
                   history.push(slug);
                 }}
               >
-                <StyledLinkText>{name}</StyledLinkText>
+                <StyledLinkItem>
+                  {name === "Dzikopedia" ? (
+                    <StyledIcon
+                      source={require("../../../assets/icons/question-mark.png")}
+                    />
+                  ) : (
+                    <StyledIcon
+                      source={require("../../../assets/icons/settings.png")}
+                    />
+                  )}
+
+                  <StyledLinkText>{name}</StyledLinkText>
+                </StyledLinkItem>
               </TouchableWithoutFeedback>
             </Link>
           );
