@@ -14,7 +14,7 @@ const StyledButtonContainer = styled.View`
   flex-direction: row;
   justify-content: space-evenly;
   position: absolute;
-  bottom: 17.5%;
+  bottom: 15%;
   z-index: 2;
   margin-left: 0.25%;
 `;
@@ -24,7 +24,7 @@ const StyledDialogContainer = styled.View`
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 17.5%;
+  bottom: 15%;
   z-index: 3;
 `;
 
