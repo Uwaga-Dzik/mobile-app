@@ -12,7 +12,7 @@ const PosedLinksBox = posed.View({
     opacity: 1,
   },
   close: {
-    y: "-500%",
+    y: -1000,
     opacity: 0,
   },
 });
