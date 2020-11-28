@@ -1,11 +1,11 @@
-
 import React, {Fragment, useEffect, useState, useRef} from "react";
-import MapView, {PROVIDER_GOOGLE, Marker, Circle} from "react-native-maps";
+import MapView, {Marker, Circle} from "react-native-maps";
 import * as Location from "expo-location";
-import { StyleSheet, Text, View, ActivityIndicator, Image } from "react-native";
-import device from "../../utils/device";
+import {StyleSheet, Text, View, ActivityIndicator, Image} from "react-native";
 
-const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, distanceInterval: 10 };
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import * as mapActions from "../../redux/actions/MapActions";
 
 const Map = (props) => {
     const [location, setLocation] = useState({
@@ -57,6 +57,21 @@ const Map = (props) => {
         // };
     }, []);
 
+    useEffect(() => {
+        if (props.map.lat !== 0 && props.map.lng !== 0) {
+            animateToRegion(props.map.lat, props.map.lng);
+
+            setTimeout(() => {
+                setCurrentRegion({
+                    latitude: props.map.lat,
+                    longitude: props.map.lng,
+                    latitudeDelta: 0.007,
+                    longitudeDelta: 0.007
+                });
+            }, 500);
+        }
+    }, [props.map]);
+
     const fetchMarkers = () => {
         // fetch markers
         API.get(`/report/${location.latitude}/${location.longitude}/1000`)
@@ -92,17 +107,20 @@ const Map = (props) => {
         // setCurrentRegion(newRegion);
     };
 
-    const onMarkerPress = (event, marker) => {
+    const animateToRegion = (latitude, longitude, TIME = 500) => {
         const newRegion = {
-            latitude: marker.latitude - 0.002,
-            longitude: marker.longitude,
+            latitude: latitude,
+            longitude: longitude,
             latitudeDelta: 0.007,
             longitudeDelta: 0.007
         };
-        const TIME = 300;
 
         mapRef.current.animateToRegion(newRegion, TIME);
-        setCurrentRegion(newRegion);
+    };
+
+    const onMarkerPress = (event, marker) => {
+
+        animateToRegion(marker.latitude - 0.002, marker.longitude, 500);
 
         setTimeout(() => {
             if (props.showMarkerDialog && props.selectedMarker.id === marker.id) {
@@ -111,7 +129,14 @@ const Map = (props) => {
                 props.onMarkerClick(marker);
                 props.setShowMarkerDialog(true);
             }
-        }, TIME);
+
+            setCurrentRegion({
+                latitude: marker.latitude - 0.002,
+                longitude: marker.longitude,
+                latitudeDelta: 0.007,
+                longitudeDelta: 0.007
+            });
+        }, 500);
     };
 
     if (showMap) {
@@ -129,14 +154,15 @@ const Map = (props) => {
                 style={{width: "100%", height: "100%", position: "relative"}}
                 region={currentRegion}
                 moveOnMarkerPress={false}
-                // onPress={e => onMapPress(e.nativeEvent)}
-                >
+                onPress={e => onMapPress(e.nativeEvent)}
+            >
                 {markers.map((marker, index) => (
                     <Fragment key={index}>
                         <Circle center={{
                             latitude: marker.latitude,
                             longitude: marker.longitude,
-                        }} radius={100} key={"circle_" + index} fillColor={"rgba(197, 197, 197, 0.5)"} strokeWidth={0}
+                        }} radius={100} key={"circle_" + index} fillColor={"rgba(197, 197, 197, 0.5)"}
+                                strokeColor={"rgba(197, 197, 197, 0.5)"} strokeWidth={1}
                         />
 
                         <Marker
@@ -190,4 +216,16 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Map;
+const mapStateToProps = (state) => {
+    return {
+        map: state.map,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        mapActions: bindActionCreators(mapActions, dispatch),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

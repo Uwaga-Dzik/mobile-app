@@ -15,11 +15,11 @@ import { createLogger } from "redux-logger";
 import PromiseMiddleware from "redux-promise-middleware";
 import rootReducer from "../../redux/store";
 import { Provider } from "react-redux";
-const loggerMiddleware = createLogger();
+// const loggerMiddleware = createLogger();
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk, loggerMiddleware, PromiseMiddleware)
+  applyMiddleware(thunk, PromiseMiddleware)
 );
 
 const Index = () => {
