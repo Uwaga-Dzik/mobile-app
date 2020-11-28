@@ -66,9 +66,24 @@ const Map = () => {
         setMarkers(newMarkers);
     };
 
+
+  const onMapPress = (event) => {
+    let newMarkers = [...markers];
+    newMarkers.push({
+      coords: {
+        latitude: event.coordinate.latitude,
+        longitude: event.coordinate.longitude,
+      },
+      title: `Marker ${markers.length + 1}`,
+      description: `Desc ${markers.length + 1}`,
+    });
+    setMarkers(newMarkers);
+  };
+
     const locationChanged = (location) => {
         setLocation(location.coords);
     };
+
 
     const onRegionChangeComplete = (newRegion) => {
         // console.log("onRegionChangeComplete");
@@ -93,28 +108,44 @@ const Map = () => {
                         }} radius={100} key={"circle_" + index} fillColor={"rgba(197, 197, 197, 0.5)"} strokeWidth={0}
                         />
 
-                        <Marker
-                            key={"marker_" + index}
-                            coordinate={marker.coords}
-                            title={marker.title}
-                            anchor={{x: 0.5, y: 0.5}}
-                            description={marker.description}>
-                            <Image source={require('../../assets/logo/logo.png')} style={{height: 80, width: 80}}  />
-                        </Marker>
-                    </Fragment>
-                ))}
-            </MapView>
-        );
-    } else
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator
-                    animating={true}
-                    color='#F9650C'
-                    size={80}
-                    style={styles.activityIndicator}/>
-            </View>
-        );
+
+  if (showMap) {
+    return (
+      <MapView
+        followsUserLocation={true}
+        showsUserLocation={true}
+        provider={PROVIDER_GOOGLE}
+        onRegionChangeComplete={onRegionChangeComplete}
+        style={{ width: "100%", height: "100%", position: "relative" }}
+        region={currentRegion}
+        onPress={(e) => onMapPress(e.nativeEvent)}
+      >
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={marker.coords}
+            title={marker.title}
+            description={marker.description}
+          >
+            <Image
+              source={require("../../assets/logo/logo.png")}
+              style={{ height: 50, width: 50 }}
+            />
+          </Marker>
+        ))}
+      </MapView>
+    );
+  } else
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator
+          animating={true}
+          color="#F9650C"
+          size={80}
+          style={styles.activityIndicator}
+        />
+      </View>
+    );
 };
 
 const styles = StyleSheet.create({
