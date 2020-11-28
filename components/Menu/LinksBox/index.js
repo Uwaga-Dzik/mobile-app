@@ -133,7 +133,7 @@ const LinksBox = ({isOpen, setIsOpen}) => {
                     </StyledImage>
                     <StyledHello>
                         <StyledHelloText>Witaj,</StyledHelloText>
-                        <StyledHelloText isBold>Angelika! 😀</StyledHelloText>
+                        <StyledHelloText isBold>Gościu! 😀</StyledHelloText>
                     </StyledHello>
                 </StyledName>
 
@@ -148,7 +148,7 @@ const LinksBox = ({isOpen, setIsOpen}) => {
           </StyledSearchContainer>
 
             <StyledLinks>
-                {menuLinks.map(({name, slug}) => {
+                {menuLinks.map(({name, slug, icon}) => {
                     return (
                         <Link to={`${slug}`} key={slug}>
                             <TouchableWithoutFeedback
@@ -158,15 +158,7 @@ const LinksBox = ({isOpen, setIsOpen}) => {
                                 }}
                             >
                                 <StyledLinkItem>
-                                    {name === "Dzikopedia" ? (
-                                        <StyledIcon
-                                            source={require("../../../assets/icons/question-mark.png")}
-                                        />
-                                    ) : (
-                                        <StyledIcon
-                                            source={require("../../../assets/icons/settings.png")}
-                                        />
-                                    )}
+                                        <StyledIcon source={icon}/>
 
                                     <StyledLinkText>{name}</StyledLinkText>
                                 </StyledLinkItem>
