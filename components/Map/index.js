@@ -54,18 +54,6 @@ const Map = () => {
         };
     }, []);
 
-    const onMapPress = (event) => {
-        let newMarkers = [...markers];
-        newMarkers.push(
-            {
-                coords: {latitude: event.coordinate.latitude, longitude: event.coordinate.longitude},
-                title: `Marker ${markers.length + 1}`,
-                description: `Desc ${markers.length + 1}`,
-            },
-        );
-        setMarkers(newMarkers);
-    };
-
 
   const onMapPress = (event) => {
     let newMarkers = [...markers];
