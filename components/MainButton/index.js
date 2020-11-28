@@ -7,7 +7,7 @@ const StyledButton = styled.View`
     isGreen
       ? ({ theme }) => theme.colors.green
       : ({ theme }) => theme.colors.orange};
-  padding: 20px 30px;
+  padding: 10px 30px;
   border: none;
   border-radius: 18px;
   font-weight: ${({ theme }) => theme.fonts.bold};
