@@ -1,23 +1,27 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import styled from "styled-components";
 import Menu from "../Menu";
+import Search from "../Search";
 
 const StyledHeader = styled.View`
-  /* width: 100%; */
-  height: 8%;
   display: flex;
   flex-direction: row;
   margin: 0 15px;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0 20px 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 `;
 
-const Header = () => {
+const Header = ({ isOpen, setIsOpen }) => {
   return (
     <StyledHeader>
-      <Text>Logo</Text>
-      <Text>Search...</Text>
-      <Menu />
+      <View>
+        <Text>SVG</Text>
+      </View>
+      <Search />
+      <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
     </StyledHeader>
   );
 };

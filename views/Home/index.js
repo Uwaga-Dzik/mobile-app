@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import MainButton from "../../components/MainButton";
+
 import Map from "../../components/Map";
 import styled from 'styled-components';
 
