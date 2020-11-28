@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {View} from "react-native";
 import MainButton from "../../components/MainButton";
 
@@ -17,11 +17,26 @@ const StyledButtonContainer = styled.View`
   margin-left: 0.25%;
 `;
 
+const StyledDialogContainer = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 28%;
+  z-index: 3;
+`;
+
 const Home = () => {
+
+    const [selectedMarker, setSelectedMarker] = useState({});
+    const [showMarkerDialog, setShowMarkerDialog] = useState(false);
+
     return (
         <View>
-            <MarkerDialog/>
-            <Map/>
+            <Map onMarkerClick={(marker) => setSelectedMarker(marker)}
+                 selectedMarker={selectedMarker}
+                 showMarkerDialog={showMarkerDialog}
+                 setShowMarkerDialog={(show) => setShowMarkerDialog(show)}/>
             <StyledButtonContainer>
                 <MainButton
                     isGreen={true}
@@ -36,6 +51,14 @@ const Home = () => {
                     isBoar={false}
                 />
             </StyledButtonContainer>
+
+            {
+                showMarkerDialog ?
+                    <StyledDialogContainer>
+                        <MarkerDialog marker={selectedMarker}/>
+                    </StyledDialogContainer>
+                    : null
+            }
         </View>
     );
 };
