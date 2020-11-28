@@ -75,6 +75,7 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
   const [isChildern, setIsChildren] = useState(false);
   const [buttonIndex, setButtonIndex] = useState(1);
   const [description, setDescription] = useState("");
+  const [isDeath, setIsDeath] = useState(false);
 
   const handleCloseModal = (isCancle = false) => {
     setIsBoar(false);
@@ -83,6 +84,7 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
     setIsChildren(false);
     setButtonIndex(1);
     setDescription("");
+    setIsDeath(false);
 
     if (isCancle) return;
     else alert("Dziękujemy, Twoje zgłoszenie zostało poprawnie dodane 😀");
@@ -162,7 +164,7 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
           >
             <StyledFormModalTwo>
               <StyledText>Dodatkowe informacje</StyledText>
-              <Text>wszystkie pola są opcjonalne</Text>
+              <Text>Wszystkie pola są opcjonalne</Text>
               <Text>Twoje zgłoszenie zostało już dodane</Text>
 
               <Text style={{ marginTop: 10, marginBottom: 10 }}>
@@ -207,7 +209,7 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
         {isBoar && (
           <>
             <StyledText>Co widzisz? </StyledText>
-            <Text>wszystkie pola są opcjonalne</Text>
+            <Text>Wszystkie pola są opcjonalne</Text>
             <Text>Twoje zgłoszenie zostało już dodane</Text>
 
             <Text style={{ marginTop: 10 }}>Rozmiar grupy</Text>
@@ -224,9 +226,19 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
 
             <StyledFormWrapper>
               <CheckBox
+                checked={isDeath}
+                onValueChange={setIsDeath}
+                title="martwy dzik"
+                onPress={() => setIsDeath(!isDeath)}
+                checkedColor={"#FE9454"}
+              />
+            </StyledFormWrapper>
+
+            <StyledFormWrapper>
+              <CheckBox
                 checked={isChildern}
                 onValueChange={setIsChildren}
-                title="zauważyłem/łam dziki"
+                title="zauważyłem/łam młode dziki"
                 onPress={() => setIsChildren(!isChildern)}
                 checkedColor={"#43C079"}
               />

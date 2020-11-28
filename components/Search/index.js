@@ -17,7 +17,7 @@ const StyledSearch = styled.View`
   height: 50%;
 `;
 
-const StyledButton = styled.TouchableWithoutFeedback``;
+const StyledButton = styled.TouchableOpacity``;
 
 const StyledIcon = styled.Image`
   margin-left: 3px;
