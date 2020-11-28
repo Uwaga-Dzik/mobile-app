@@ -104,7 +104,8 @@ const StyledIcon = styled.Image`
 `;
 
 const StyledAvatar = styled.Image`
-  border-radius: 16px;
+  width: 80px;
+  height: 80px;
 `;
 
 const LinksBox = ({ isOpen, setIsOpen }) => {
@@ -121,6 +122,7 @@ const LinksBox = ({ isOpen, setIsOpen }) => {
           <StyledImage>
             <StyledAvatar
               source={require("../../../assets/icons/avatar.png")}
+              style={{ resizeMode: "contain" }}
             />
           </StyledImage>
           <StyledHello>

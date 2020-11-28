@@ -13,6 +13,7 @@ import MainButton from "../MainButton";
 import * as ImagePicker from "expo-image-picker";
 import { ButtonGroup, CheckBox, Input } from "react-native-elements";
 import Textarea from "react-native-textarea";
+import { apisAreAvailable } from "expo";
 
 const StyledFormModal = styled.View`
   position: absolute;
@@ -64,13 +65,14 @@ const StyledFormModalTwo = styled(StyledFormModal)`
 
 const buttons = ["mały", "średni", "duży"];
 
-const DismissKeyboard = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-);
-
-const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
+const FormModal = ({
+  isBoar,
+  setIsBoar,
+  isFootPrints,
+  setIsFootPrint,
+  id,
+  fetchMarkers,
+}) => {
   const [image, setImage] = useState(null);
   const [isChildern, setIsChildren] = useState(false);
   const [buttonIndex, setButtonIndex] = useState(1);
@@ -142,6 +144,26 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
     }
   };
 
+  const handleUpdate = () => {
+    const data = {
+      _method: "PUT",
+      size: buttonIndex,
+      with_children: !isChildern ? 0 : 1,
+      alive: !isDeath ? 0 : 1,
+      description: description,
+      // image:
+    };
+
+    console.log("handleUpdate", data);
+
+    API.post(`/report/${id}`, API.objectToFormData(data))
+      .then(() => {
+        fetchMarkers();
+        alert("Zgłoszenie dodane poprawnie");
+      })
+      .catch(() => alert("Błąd przy dodawaniu zgłoszenia"));
+  };
+
   if (isBoar || isFootPrints) {
     return (
       <StyledFormModal
@@ -195,7 +217,12 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
               )}
 
               <StyledFormWrapper>
-                <StyledButton onPress={() => handleCloseModal()}>
+                <StyledButton
+                  onPress={() => {
+                    handleCloseModal();
+                    handleUpdate();
+                  }}
+                >
                   <MainButton text={"Zatwierdź"} />
                 </StyledButton>
                 <Text>&nbsp;</Text>
@@ -259,11 +286,21 @@ const FormModal = ({ isBoar, setIsBoar, isFootPrints, setIsFootPrint }) => {
             )}
 
             <StyledFormWrapper>
-              <StyledButton onPress={() => handleCloseModal()}>
+              <StyledButton
+                onPress={() => {
+                  handleCloseModal();
+                  handleUpdate();
+                }}
+              >
                 <MainButton text={"Zatwierdź"} />
               </StyledButton>
               <Text>&nbsp;</Text>
-              <StyledButton onPress={() => handleCloseModal(true)}>
+              <StyledButton
+                onPress={() => {
+                  handleCloseModal(true);
+                  handleUpdate();
+                }}
+              >
                 <MainButton text={"Anuluj"} isGreen={false} />
               </StyledButton>
             </StyledFormWrapper>
