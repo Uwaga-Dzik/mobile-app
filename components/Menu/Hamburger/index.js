@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
-// import posed from "react-native-pose";
+import posed from "react-native-pose";
 
 const StyledHamburger = styled.TouchableHighlight`
   position: relative;
