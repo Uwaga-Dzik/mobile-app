@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 
-const StyledButton = styled.TouchableOpacity`
+const StyledButton = styled.View`
   background-color: ${({ isGreen }) =>
     isGreen
       ? ({ theme }) => theme.colors.green
