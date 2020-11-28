@@ -13,15 +13,17 @@ const StyledHeader = styled.View`
 `;
 
 const StyledLogo = styled.Image`
-  width: 60px;
-  height: 100px;
+  height: 50px;
+  margin-left: -40px;
 `;
 
 const Header = ({ isOpen, setIsOpen }) => {
   return (
     <StyledHeader>
-      <StyledLogo source={require("../../assets/logo/logo-text.png")} />
-      <Search />
+      <StyledLogo
+        source={require("../../assets/logo/logo-text.png")}
+        style={{ resizeMode: "contain" }}
+      />
       <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
     </StyledHeader>
   );

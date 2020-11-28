@@ -13,7 +13,7 @@ const StyledButtonContainer = styled.View`
   flex-direction: row;
   justify-content: space-evenly;
   position: absolute;
-  bottom: 30%;
+  bottom: 17.5%;
   z-index: 2;
   margin-left: 0.25%;
 `;
@@ -29,51 +29,52 @@ const StyledDialogContainer = styled.View`
 
 const Home = () => {
 
-    const [isBoar, setIsBoar] = useState(false);
-    const [isFootPrints, setIsFootPrint] = useState(false);
-    const [selectedMarker, setSelectedMarker] = useState({});
-    const [showMarkerDialog, setShowMarkerDialog] = useState(false);
+  const [isBoar, setIsBoar] = useState(false);
+  const [isFootPrints, setIsFootPrint] = useState(false);
+  const [selectedMarker, setSelectedMarker] = useState({});
+  const [showMarkerDialog, setShowMarkerDialog] = useState(false);
 
-    return (
-        <View>
-            <Map onMarkerClick={(marker) => setSelectedMarker(marker)}
-                 selectedMarker={selectedMarker}
-                 showMarkerDialog={showMarkerDialog}
-                 setShowMarkerDialog={(show) => setShowMarkerDialog(show)}/>
-            <FormModal
-                isBoar={isBoar}
-                setIsBoar={setIsBoar}
-                isFootPrints={isFootPrints}
-                setIsFootPrint={setIsFootPrint}
-            />
-            <StyledButtonContainer>
-                <TouchableOpacity onPress={() => setIsBoar(true)}>
-                    <MainButton
-                        isGreen={true}
-                        text={"Widzę dziki"}
-                        hasIcon={true}
-                        isBoar={true}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setIsFootPrint(true)}>
-                    <MainButton
-                        isGreen={false}
-                        text={"Widzę ślady"}
-                        hasIcon={true}
-                        isBoar={false}
-                    />
-                </TouchableOpacity>
-            </StyledButtonContainer>
+  return (
+    <View>
+      <Map
+        onMarkerClick={(marker) => setSelectedMarker(marker)}
+        selectedMarker={selectedMarker}
+        showMarkerDialog={showMarkerDialog}
+        setShowMarkerDialog={(show) => setShowMarkerDialog(show)}
+      />
+      <FormModal
+        isBoar={isBoar}
+        setIsBoar={setIsBoar}
+        isFootPrints={isFootPrints}
+        setIsFootPrint={setIsFootPrint}
+      />
+      <StyledButtonContainer>
+        <TouchableOpacity onPress={() => setIsBoar(true)}>
+          <MainButton
+            isGreen={true}
+            text={"Widzę"}
+            hasIcon={true}
+            isBoar={true}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setIsFootPrint(true)}>
+          <MainButton
+            isGreen={false}
+            text={"Widzę"}
+            hasIcon={true}
+            isBoar={false}
+          />
+        </TouchableOpacity>
+      </StyledButtonContainer>
 
-            {
-                showMarkerDialog ?
-                    <StyledDialogContainer>
-                        <MarkerDialog marker={selectedMarker} onCloseClicked={() => setShowMarkerDialog(false)}/>
-                    </StyledDialogContainer>
-                    : null
-            }
-        </View>
-    );
+      {showMarkerDialog ? (
+        <StyledDialogContainer>
+          <MarkerDialog marker={selectedMarker} onCloseClicked={() => setShowMarkerDialog(false)}/>
+        </StyledDialogContainer>
+      ) : null}
+    </View>
+  );
+
 };
 
 export default Home;

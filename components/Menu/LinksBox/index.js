@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
-import {Platform, Text, TouchableWithoutFeedback} from "react-native";
+import { Platform, Text, TouchableWithoutFeedback, View } from "react-native";
 import posed from "react-native-pose";
 import { Link } from "react-router-native";
 import styled from "styled-components";
 import { menuLinks } from "../../../data/menuLinks";
 import Hamburger from "../Hamburger";
 import { useHistory } from "react-router-native";
+import Search from "../../Search";
 
 const PosedLinksBox = posed.View({
   open: {
@@ -16,7 +17,7 @@ const PosedLinksBox = posed.View({
     },
   },
   close: {
-    y: Platform.OS === "android" ? -1000 : "-500%",
+    y: Platform.OS === "android" ? -1000 : "-800%",
     transition: {
       default: { ease: "linear", duration: 200 },
     },
@@ -26,7 +27,7 @@ const PosedLinksBox = posed.View({
 const StyledLinksBox = styled(PosedLinksBox)`
   position: absolute;
   width: 100%;
-  height: 70%;
+  height: 100%;
   top: 0;
   left: 0;
   z-index: 1;
@@ -34,7 +35,7 @@ const StyledLinksBox = styled(PosedLinksBox)`
 `;
 
 const StyledHeader = styled.View`
-  height: 30%;
+  height: 25%;
   background-color: ${({ theme }) => theme.colors.gray};
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
@@ -116,7 +117,6 @@ const LinksBox = ({ isOpen, setIsOpen }) => {
   return (
     <StyledLinksBox isOpen={isOpen} pose={isOpen ? "open" : "close"}>
       <StyledHeader>
-
         <StyledName>
           <StyledImage>
             <StyledAvatar
@@ -128,7 +128,6 @@ const LinksBox = ({ isOpen, setIsOpen }) => {
             <StyledHelloText isBold>Angelika! 😀</StyledHelloText>
           </StyledHello>
         </StyledName>
-
 
         <StyledHamburgerWrapper>
           <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
