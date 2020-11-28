@@ -116,68 +116,60 @@ const StyledAvatar = styled.Image`
   height: 80px;
 `;
 
-const LinksBox = ({ isOpen, setIsOpen }) => {
-  let history = useHistory();
+const LinksBox = ({isOpen, setIsOpen}) => {
+    let history = useHistory();
 
-  const handlePress = () => {
-    setIsOpen(!isOpen);
-  };
+    const handlePress = () => {
+        setIsOpen(!isOpen);
+    };
 
-  return (
-    <StyledLinksBox isOpen={isOpen} pose={isOpen ? "open" : "close"}>
-      <StyledHeader>
-        <StyledName>
-          <StyledImage>
-            <StyledAvatar
-              source={require("../../../assets/icons/avatar.png")}
-              style={{ resizeMode: "contain" }}
-            />
-          </StyledImage>
-          <StyledHello>
-            <StyledHelloText>Witaj,</StyledHelloText>
-            <StyledHelloText isBold>Angelika! 😀</StyledHelloText>
-          </StyledHello>
-        </StyledName>
+    return (
+        <StyledLinksBox isOpen={isOpen} pose={isOpen ? "open" : "close"}>
+            <StyledHeader>
+                <StyledName>
+                    <StyledImage>
+                      <StyledAvatar
+                        source={require("../../../assets/icons/avatar.png")}
+                        style={{ resizeMode: "contain" }}
+                      />
+                    </StyledImage>
+                    <StyledHello>
+                        <StyledHelloText>Witaj,</StyledHelloText>
+                        <StyledHelloText isBold>Gość! 😀</StyledHelloText>
+                    </StyledHello>
+                </StyledName>
 
-        <StyledHamburgerWrapper>
-          <Hamburger isOpen={isOpen} setIsOpen={setIsOpen} />
-        </StyledHamburgerWrapper>
-      </StyledHeader>
+                <StyledHamburgerWrapper>
+                    <Hamburger isOpen={isOpen} setIsOpen={setIsOpen}/>
+                </StyledHamburgerWrapper>
+
+            </StyledHeader>
 
           <StyledSearchContainer>
             <Search closeLinksBox={() => setIsOpen(false)} />
           </StyledSearchContainer>
 
-      <StyledLinks>
-        {menuLinks.map(({ name, slug }) => {
-          return (
-            <Link to={`${slug}`} key={slug}>
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  handlePress();
-                  history.push(slug);
-                }}
-              >
-                <StyledLinkItem>
-                  {name === "Dzikopedia" ? (
-                    <StyledIcon
-                      source={require("../../../assets/icons/question-mark.png")}
-                    />
-                  ) : (
-                    <StyledIcon
-                      source={require("../../../assets/icons/settings.png")}
-                    />
-                  )}
+            <StyledLinks>
+                {menuLinks.map(({name, slug, icon}) => {
+                    return (
+                        <Link to={`${slug}`} key={slug}>
+                            <TouchableWithoutFeedback
+                                onPress={() => {
+                                    handlePress();
+                                    history.push(slug);
+                                }}>
+                                <StyledLinkItem>
+                                        <StyledIcon source={icon}/>
 
-                  <StyledLinkText>{name}</StyledLinkText>
-                </StyledLinkItem>
-              </TouchableWithoutFeedback>
-            </Link>
-          );
-        })}
-      </StyledLinks>
-    </StyledLinksBox>
-  );
+                                    <StyledLinkText>{name}</StyledLinkText>
+                                </StyledLinkItem>
+                            </TouchableWithoutFeedback>
+                        </Link>
+                    );
+                })}
+            </StyledLinks>
+        </StyledLinksBox>
+    );
 };
 
 LinksBox.propTypes = {

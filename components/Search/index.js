@@ -49,7 +49,7 @@ const Search = ({ mapActions, closeLinksBox }) => {
       <StyledInput
         onChangeText={(text) => setText(text)}
         value={text}
-        placeholder={"Wyszukaj lokalizacje"}
+        placeholder={"Wyszukaj lokalizacje na mapie"}
         onSubmitEditing={handleSearch}
       />
       <StyledButton onPress={handleSearch}>
