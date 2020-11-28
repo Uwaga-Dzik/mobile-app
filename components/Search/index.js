@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as mapActions from "../../redux/actions/MapActions";
 
 const StyledSearch = styled.View`
-  width: 60%;
+  width: 90%;
   display: flex;
   flex-direction: row;
   padding: 5px;
@@ -14,7 +14,7 @@ const StyledSearch = styled.View`
   align-items: center;
   border: 1px solid #dedede;
   border-radius: 8px;
-  height: 50%;
+  height: 100%;
 `;
 
 const StyledButton = styled.TouchableOpacity``;
@@ -28,7 +28,7 @@ const StyledInput = styled.TextInput`
   font-size: 16px;
 `;
 
-const Search = ({ mapActions }) => {
+const Search = ({ mapActions, closeLinksBox }) => {
   const [text, setText] = useState("");
 
   const handleSearch = () => {
@@ -36,6 +36,7 @@ const Search = ({ mapActions }) => {
       .then((resp) => {
         if (resp.length > 0) {
           mapActions.navigateToRegion(resp[0].latitude, resp[0].longitude);
+            closeLinksBox();
         } else {
           console.log("Nie znaleziono lokalizacji");
         }

@@ -18,54 +18,47 @@ const Map = (props) => {
 
   const mapRef = useRef();
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== "granted") {
-        alert("Permission to access location was denied");
-      }
 
-      let location = await Location.getCurrentPositionAsync();
-      props.setLocation(location.coords);
-      const newRegion = Object.assign(
-        {
-          latitudeDelta: 0.007,
-          longitudeDelta: 0.007,
-        },
-        location.coords
-      );
+    useEffect(() => {
+        (async () => {
 
-      setCurrentRegion(newRegion);
-      setShowMap(true);
-    })();
+            let {status} = await Location.requestPermissionsAsync();
+            if (status !== "granted") {
+                alert("Permission to access location was denied");
+            }
 
-    // setup location subscriber
-    // let removeLocationSubscriber;
-    // Location.watchPositionAsync(GEOLOCATION_OPTIONS, locationChanged).then(
-    //   (res) => {
-    //     removeLocationSubscriber = res.remove;
-    //   }
-    // );
+            let location = await Location.getCurrentPositionAsync();
+            setLocation(location.coords);
+            const newRegion = Object.assign(
+                {
+                    latitudeDelta: 0.007,
+                    longitudeDelta: 0.007,
+                },
+                location.coords
+            );
 
-    // return () => {
-    //   removeLocationSubscriber();
-    // };
-  }, []);
+            setCurrentRegion(newRegion);
+            setShowMap(true);
+        })();
 
-  useEffect(() => {
-    if (props.map.lat !== 0 && props.map.lng !== 0) {
-      animateToRegion(props.map.lat, props.map.lng);
+        // setup location subscriber
+        // let removeLocationSubscriber;
+        // Location.watchPositionAsync(GEOLOCATION_OPTIONS, locationChanged).then(
+        //     (res) => {
+        //         removeLocationSubscriber = res.remove;
+        //     }
+        // );
 
-      setTimeout(() => {
-        setCurrentRegion({
-          latitude: props.map.lat,
-          longitude: props.map.lng,
-          latitudeDelta: 0.007,
-          longitudeDelta: 0.007,
-        });
-      }, 500);
-    }
-  }, [props.map]);
+        // return () => {
+        //     removeLocationSubscriber();
+        // };
+    }, []);
+
+    useEffect(() => {
+        if (props.map.lat !== 0 && props.map.lng !== 0) {
+            animateToRegion(props.map.lat, props.map.lng, 100);
+        }
+    }, [props.map]);
 
   const fetchMarkers = () => {
     // fetch markers
@@ -84,27 +77,26 @@ const Map = (props) => {
     fetchMarkers();
   };
 
-  const onMapPress = (event) => {
-    API.post("/report", {
-      latitude: event.coordinate.latitude,
-      longitude: event.coordinate.longitude,
-    })
-      .then(() => {
-        fetchMarkers();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+    const onMapPress = (event) => {
+        API.post('/report', {
+            latitude: event.coordinate.latitude,
+            longitude: event.coordinate.longitude,
+        }).then(() => {
+            fetchMarkers();
+        }).catch((e) => {
+            console.log(e);
+            alert("Wystąpił błąd podczas pobierania zgłoszeń");
+        })
+    };
 
-  const locationChanged = (location) => {
-    props.setLocation(props.location.coords);
-  };
+    const locationChanged = (location) => {
+        setLocation(props.location.coords);
+    };
 
-  const onRegionChangeComplete = (newRegion) => {
-    // console.log("onRegionChangeComplete");
-    // setCurrentRegion(newRegion);
-  };
+    const onRegionChangeComplete = (newRegion) => {
+        // console.log("onRegionChangeComplete");
+        // setCurrentRegion(newRegion);
+    };
 
   const animateToRegion = (latitude, longitude, TIME = 500) => {
     const newRegion = {
@@ -117,25 +109,16 @@ const Map = (props) => {
     mapRef.current.animateToRegion(newRegion, TIME);
   };
 
-  const onMarkerPress = (event, marker) => {
-    animateToRegion(marker.latitude - 0.002, marker.longitude, 500);
+    const onMarkerPress = (event, marker) => {
+        animateToRegion(marker.latitude - 0.0015, marker.longitude, 500);
 
-    setTimeout(() => {
-      if (props.showMarkerDialog && props.selectedMarker.id === marker.id) {
-        props.setShowMarkerDialog(false);
-      } else {
-        props.onMarkerClick(marker);
-        props.setShowMarkerDialog(true);
-      }
-
-      setCurrentRegion({
-        latitude: marker.latitude - 0.002,
-        longitude: marker.longitude,
-        latitudeDelta: 0.007,
-        longitudeDelta: 0.007,
-      });
-    }, 500);
-  };
+            if (props.showMarkerDialog && props.selectedMarker.id === marker.id) {
+                props.setShowMarkerDialog(false);
+            } else {
+                props.onMarkerClick(marker);
+                props.setShowMarkerDialog(true);
+            }
+    };
 
   if (showMap) {
     return (
