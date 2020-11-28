@@ -7,16 +7,14 @@ const StyledWrapper = styled.SafeAreaView`
   min-height: 100%;
   width: 100%;
   flex-direction: column;
-  paddingTop: ${Platform.OS === "android" ? StatusBar.currentHeight : 0}
+  padding-top: ${Platform.OS === "android" ? StatusBar.currentHeight : 0};
 `;
 
 const Layout = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <StyledWrapper>
-            {children}
-        </StyledWrapper>
+        <StyledWrapper>{children}</StyledWrapper>
       </>
     </ThemeProvider>
   );
