@@ -18,22 +18,35 @@ const StyledButtonContainer = styled.View`
   margin-left: 0.25%;
 `;
 
+const StyledDialogContainer = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 28%;
+  z-index: 3;
+`;
+
 const Home = () => {
+
   const [isBoar, setIsBoar] = useState(false);
   const [isFootPrints, setIsFootPrint] = useState(false);
+    const [selectedMarker, setSelectedMarker] = useState({});
+    const [showMarkerDialog, setShowMarkerDialog] = useState(false);
 
-  return (
-    <View>
-      <MarkerDialog />
-      <Map />
-      <FormModal
+    return (
+        <View>
+            <Map onMarkerClick={(marker) => setSelectedMarker(marker)}
+                 selectedMarker={selectedMarker}
+                 showMarkerDialog={showMarkerDialog}
+                 setShowMarkerDialog={(show) => setShowMarkerDialog(show)}/>
+                         <FormModal
         isBoar={isBoar}
         setIsBoar={setIsBoar}
         isFootPrints={isFootPrints}
         setIsFootPrint={setIsFootPrint}
       />
-
-      <StyledButtonContainer>
+            <StyledButtonContainer>
         <TouchableOpacity onPress={() => setIsBoar(true)}>
           <MainButton
             isGreen={true}
@@ -50,9 +63,17 @@ const Home = () => {
             isBoar={false}
           />
         </TouchableOpacity>
-      </StyledButtonContainer>
-    </View>
-  );
+            </StyledButtonContainer>
+
+            {
+                showMarkerDialog ?
+                    <StyledDialogContainer>
+                        <MarkerDialog marker={selectedMarker}/>
+                    </StyledDialogContainer>
+                    : null
+            }
+        </View>
+    );
 };
 
 export default Home;
