@@ -23,7 +23,7 @@ const StyledDialogContainer = styled.View`
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 28%;
+  bottom: 17.5%;
   z-index: 3;
 `;
 

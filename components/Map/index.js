@@ -59,16 +59,7 @@ const Map = (props) => {
 
     useEffect(() => {
         if (props.map.lat !== 0 && props.map.lng !== 0) {
-            animateToRegion(props.map.lat, props.map.lng);
-
-            setTimeout(() => {
-                setCurrentRegion({
-                    latitude: props.map.lat,
-                    longitude: props.map.lng,
-                    latitudeDelta: 0.007,
-                    longitudeDelta: 0.007
-                });
-            }, 500);
+            animateToRegion(props.map.lat, props.map.lng, 100);
         }
     }, [props.map]);
 
@@ -95,6 +86,7 @@ const Map = (props) => {
             fetchMarkers();
         }).catch((e) => {
             console.log(e);
+            alert("Wystąpił błąd podczas pobierania zgłoszeń");
         })
     };
 
@@ -120,23 +112,14 @@ const Map = (props) => {
 
     const onMarkerPress = (event, marker) => {
 
-        animateToRegion(marker.latitude - 0.002, marker.longitude, 500);
+        animateToRegion(marker.latitude - 0.0015, marker.longitude, 500);
 
-        setTimeout(() => {
             if (props.showMarkerDialog && props.selectedMarker.id === marker.id) {
                 props.setShowMarkerDialog(false);
             } else {
                 props.onMarkerClick(marker);
                 props.setShowMarkerDialog(true);
             }
-
-            setCurrentRegion({
-                latitude: marker.latitude - 0.002,
-                longitude: marker.longitude,
-                latitudeDelta: 0.007,
-                longitudeDelta: 0.007
-            });
-        }, 500);
     };
 
     if (showMap) {
@@ -146,13 +129,16 @@ const Map = (props) => {
                 onMapReady={() => onMapReady()}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
+                collapsable={true}
+                followsUserLocation={true}
+                showsScale={true}
                 showsPointsOfInterest={false}
                 pitchEnabled={false}
                 toolbarEnabled={false}
                 rotateEnabled={false}
                 // onRegionChangeComplete={onRegionChangeComplete}
                 style={{width: "100%", height: "100%", position: "relative"}}
-                region={currentRegion}
+                initialRegion={currentRegion}
                 moveOnMarkerPress={false}
                 onPress={e => onMapPress(e.nativeEvent)}
             >
@@ -164,7 +150,6 @@ const Map = (props) => {
                         }} radius={100} key={"circle_" + index} fillColor={"rgba(197, 197, 197, 0.5)"}
                                 strokeColor={"rgba(197, 197, 197, 0.5)"} strokeWidth={1}
                         />
-
                         <Marker
                             onPress={e => onMarkerPress(e.nativeEvent, marker)}
                             key={"marker_" + index}
@@ -174,7 +159,7 @@ const Map = (props) => {
                             }}
                             anchor={{x: 0.5, y: 0.5}}
                             description={marker.report.description}>
-                            <Image source={require('../../assets/logo/logo.png')} style={{height: 80, width: 80}}/>
+                            <Image source={require('../../assets/logo/logo.png')} style={{height: 40, width: 40}}/>
                         </Marker>
                     </Fragment>
                 ))}
