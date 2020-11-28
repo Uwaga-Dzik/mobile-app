@@ -7,17 +7,14 @@ const StyledButton = styled.View`
     isGreen
       ? ({ theme }) => theme.colors.green
       : ({ theme }) => theme.colors.orange};
-  padding: 10px 30px;
+  padding: 20px 30px;
   border: none;
   border-radius: 18px;
   font-weight: ${({ theme }) => theme.fonts.bold};
   font-size: 16px;
   z-index: -1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: row;
 
   ${({ theme }) => theme.mixins.center}
 
@@ -33,10 +30,10 @@ const StyledLabel = styled.Text`
 `;
 
 const StyledIcon = styled.Image`
-  margin: 0;
+  margin-left: 8%;
   padding: 0;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
 `;
 
 const MainButton = ({ isGreen, text, hasIcon, isBoar }) => {
