@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator, Image } from "react-native";
 import device from "../../utils/device";
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, distanceInterval: 10 };
@@ -19,18 +19,19 @@ const Map = () => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
-  const markers = [
-    {
-      coords: { latitude: 53.4635134798977, longitude: 14.550085868686438 },
-      title: "test 1",
-      description: "Desc 1",
-    },
-    {
-      coords: { latitude: 53.4635134799977, longitude: 14.550085868786438 },
-      title: "test 2",
-      description: "Desc 2",
-    },
-  ];
+  const [markers, setMarkers] = useState([]);
+  // const markers = [
+  //   {
+  //     coords: { latitude: 53.4635134798977, longitude: 14.550085868686438 },
+  //     title: "test 1",
+  //     description: "Desc 1",
+  //   },
+  //   {
+  //     coords: { latitude: 53.4635134799977, longitude: 14.550085868786438 },
+  //     title: "test 2",
+  //     description: "Desc 2",
+  //   },
+  // ];
 
   useEffect(() => {
     (async () => {
@@ -50,16 +51,6 @@ const Map = () => {
       );
 
       setCurrentRegion(newRegion);
-      // Location.reverseGeocodeAsync({
-      //     latitude: 53.539668,
-      //     longitude: 14.466146
-      // })
-      //     .then((res) => {
-      //        console.log(res);
-      //     })
-      //     .catch((er) => {
-      //         console.log(er);
-      //     });
       setShowMap(true);
     })();
 
@@ -75,17 +66,25 @@ const Map = () => {
     };
   }, []);
 
+  const onMapPress = (event) => {
+    let newMarkers = [...markers];
+    newMarkers.push(
+          {
+            coords: { latitude: event.coordinate.latitude, longitude: event.coordinate.longitude },
+            title: `Marker ${markers.length + 1}`,
+            description: `Desc ${markers.length + 1}`,
+          },
+    );
+    setMarkers(newMarkers);
+  };
+
   const locationChanged = (location) => {
     setLocation(location.coords);
   };
 
-  const onRegionChange = (newRegion) => {
-    // console.log(currentRegion, newRegion);
-    // if ((Math.abs(newRegion.latitude - currentRegion.latitude) > 0.005) &&
-    //     (Math.abs(newRegion.longitude - currentRegion.longitude) > 0.005)) {
-    //     console.log("Fetch new markers", newRegion);
-    //     setCurrentRegion(newRegion);
-    // }
+  const onRegionChangeComplete = (newRegion) => {
+    // console.log("onRegionChangeComplete");
+    // setCurrentRegion(newRegion);
   };
 
   if (showMap) {
@@ -94,25 +93,31 @@ const Map = () => {
         followsUserLocation={true}
         showsUserLocation={true}
         provider={PROVIDER_GOOGLE}
-        onRegionChange={onRegionChange}
+        onRegionChangeComplete={onRegionChangeComplete}
         style={{ width: "100%", height: "100%", position: "relative" }}
         region={currentRegion}
+        onPress={e => onMapPress(e.nativeEvent)}
       >
         {markers.map((marker, index) => (
           <Marker
             key={index}
             coordinate={marker.coords}
             title={marker.title}
-            description={marker.description}
-          />
+            description={marker.description}>
+            <Image source={require('../../assets/logo/logo.png')} style={{height: 50, width: 50 }} />
+          </Marker>
         ))}
       </MapView>
     );
   } else
     return (
-      <Text style={{ width: "100%", height: "100%", position: "relative" }}>
-        Wczytywanie
-      </Text>
+      <View style={styles.loadingContainer}>
+          <ActivityIndicator
+              animating = {true}
+              color = '#F9650C'
+              size={80}
+              style = {styles.activityIndicator}/>
+      </View>
     );
 };
 
@@ -133,6 +138,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 16,
   },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: "relative",
+    width: '100%',
+    height: '100%'
+  },
+  activityIndicator: {
+    width: 100,
+    height: 100,
+    paddingBottom: 350
+  }
 });
 
 export default Map;
