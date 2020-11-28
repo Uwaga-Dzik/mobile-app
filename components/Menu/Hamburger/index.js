@@ -1,11 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
-// import posed from "react-native-pose";
-
-// const PosedHamburgerTop = posed.View({
-
-// })
+import posed from "react-native-pose";
 
 const StyledHamburger = styled.TouchableHighlight`
   position: relative;
@@ -14,7 +10,28 @@ const StyledHamburger = styled.TouchableHighlight`
   padding: 0 0;
 `;
 
-const StyledHamburgerTop = styled.View`
+const PosedHamburgerTop = posed.View({
+  open: {
+    rotate: "45deg",
+    y: "10%",
+    x: "0",
+    scale: 1,
+    transition: {
+      default: { ease: "linear", duration: 200 },
+    },
+  },
+  close: {
+    rotate: "0",
+    y: "0",
+    x: "0",
+    scale: 1,
+    transition: {
+      default: { ease: "linear", duration: 200 },
+    },
+  },
+});
+
+const StyledHamburgerTop = styled(PosedHamburgerTop)`
   position: absolute;
   top: 0;
   left: 0;
@@ -24,7 +41,28 @@ const StyledHamburgerTop = styled.View`
   border-radius: 18px;
 `;
 
-const StyledHamburgerBottom = styled.View`
+const PosedHamburgerBottom = posed.View({
+  open: {
+    rotate: "-45deg",
+    y: "-10%",
+    x: "0",
+    scale: 1,
+    transition: {
+      default: { ease: "linear", duration: 200 },
+    },
+  },
+  close: {
+    rotate: "0",
+    y: "0",
+    x: "0",
+    scale: 1,
+    transition: {
+      default: { ease: "linear", duration: 200 },
+    },
+  },
+});
+
+const StyledHamburgerBottom = styled(PosedHamburgerBottom)`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -42,8 +80,8 @@ const Hamburger = ({ isOpen, setIsOpen }) => {
   return (
     <StyledHamburger onPress={handlePress}>
       <>
-        <StyledHamburgerTop></StyledHamburgerTop>
-        <StyledHamburgerBottom></StyledHamburgerBottom>
+        <StyledHamburgerTop pose={isOpen ? "open" : "close"} />
+        <StyledHamburgerBottom pose={isOpen ? "open" : "close"} />
       </>
     </StyledHamburger>
   );
