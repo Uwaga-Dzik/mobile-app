@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Text, TouchableWithoutFeedback } from "react-native";
+import {Platform, Text, TouchableWithoutFeedback} from "react-native";
 import posed from "react-native-pose";
 import { Link } from "react-router-native";
 import styled from "styled-components";
@@ -10,13 +10,13 @@ import { useHistory } from "react-router-native";
 
 const PosedLinksBox = posed.View({
   open: {
-    y: "0",
+    y: Platform.OS === "android" ? 0 : "0",
     transition: {
       default: { ease: "linear", duration: 200 },
     },
   },
   close: {
-    y: "-500%",
+    y: Platform.OS === "android" ? -1000 : "-500%",
     transition: {
       default: { ease: "linear", duration: 200 },
     },

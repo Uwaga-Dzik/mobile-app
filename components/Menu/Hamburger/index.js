@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 import posed from "react-native-pose";
+import {Platform, StatusBar} from "react-native";
 
 const StyledHamburger = styled.TouchableHighlight`
   position: relative;
@@ -13,17 +14,17 @@ const StyledHamburger = styled.TouchableHighlight`
 const PosedHamburgerTop = posed.View({
   open: {
     rotate: "45deg",
-    y: "10%",
-    x: "0",
+    y:  Platform.OS === "android" ? 100 : "10%",
+    x: Platform.OS === "android" ? 0 : "0",
     scale: 1,
     transition: {
       default: { ease: "linear", duration: 200 },
     },
   },
   close: {
-    rotate: "0",
-    y: "0",
-    x: "0",
+    rotate: "0deg",
+    y: Platform.OS === "android" ? 0 : "0",
+    x: Platform.OS === "android" ? 0 : "0",
     scale: 1,
     transition: {
       default: { ease: "linear", duration: 200 },
@@ -44,17 +45,17 @@ const StyledHamburgerTop = styled(PosedHamburgerTop)`
 const PosedHamburgerBottom = posed.View({
   open: {
     rotate: "-45deg",
-    y: "-10%",
-    x: "0",
+    y: Platform.OS === "android" ? -100 : "-10%",
+    x: Platform.OS === "android" ? 0 : "0",
     scale: 1,
     transition: {
       default: { ease: "linear", duration: 200 },
     },
   },
   close: {
-    rotate: "0",
-    y: "0",
-    x: "0",
+    rotate: "0deg",
+    y: Platform.OS === "android" ? 0 : "0",
+    x: Platform.OS === "android" ? 0 : "0",
     scale: 1,
     transition: {
       default: { ease: "linear", duration: 200 },
