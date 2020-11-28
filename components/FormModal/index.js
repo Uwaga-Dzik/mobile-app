@@ -79,7 +79,7 @@ const FormModal = ({
   const [description, setDescription] = useState("");
   const [isDeath, setIsDeath] = useState(false);
 
-  const handleCloseModal = (isCancle = false) => {
+  const handleCloseModal = (isCancel = false) => {
     setIsBoar(false);
     setIsFootPrint(false);
     setImage(null);
@@ -88,7 +88,7 @@ const FormModal = ({
     setDescription("");
     setIsDeath(false);
 
-    if (isCancle) return;
+    if (isCancel) return;
     else alert("Dziękujemy, Twoje zgłoszenie zostało poprawnie dodane 😀");
   };
 
@@ -154,12 +154,10 @@ const FormModal = ({
       // image:
     };
 
-    console.log("handleUpdate", data);
-
     API.post(`/report/${id}`, API.objectToFormData(data))
       .then(() => {
         fetchMarkers();
-        alert("Zgłoszenie dodane poprawnie");
+
       })
       .catch(() => alert("Błąd przy dodawaniu zgłoszenia"));
   };

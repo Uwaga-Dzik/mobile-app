@@ -70,7 +70,6 @@ const MarkerDialog = ({ marker, onCloseClicked }) => {
           }`}</StyledText>
         </StyledTexts>
 
-        {console.log(marker, "marker dialog")}
         {marker.report.is_tracks !== 0 ? (
           <StyledTexts>
             <StyledIcon source={require("../../assets/icons/icon_boar.png")} />

@@ -15,9 +15,9 @@ const Map = (props) => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
+  const [lastLoadedCords, setLastLoadedCords] = useState({});
 
   const mapRef = useRef();
-
 
     useEffect(() => {
         (async () => {
@@ -28,7 +28,7 @@ const Map = (props) => {
             }
 
             let location = await Location.getCurrentPositionAsync();
-            setLocation(location.coords);
+            props.setLocation(location.coords);
             const newRegion = Object.assign(
                 {
                     latitudeDelta: 0.007,
@@ -38,8 +38,14 @@ const Map = (props) => {
             );
 
             setCurrentRegion(newRegion);
+            setLastLoadedCords(location.coords);
             setShowMap(true);
         })();
+
+        setTimeout(() => {
+            fetchMarkers();
+
+        }, 30000);
 
         // setup location subscriber
         // let removeLocationSubscriber;
@@ -89,15 +95,6 @@ const Map = (props) => {
         })
     };
 
-    const locationChanged = (location) => {
-        setLocation(props.location.coords);
-    };
-
-    const onRegionChangeComplete = (newRegion) => {
-        // console.log("onRegionChangeComplete");
-        // setCurrentRegion(newRegion);
-    };
-
   const animateToRegion = (latitude, longitude, TIME = 500) => {
     const newRegion = {
       latitude: latitude,
@@ -128,12 +125,13 @@ const Map = (props) => {
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsPointsOfInterest={false}
+        followsUserLocation={true}
         pitchEnabled={false}
         toolbarEnabled={false}
         rotateEnabled={false}
-        // onRegionChangeComplete={onRegionChangeComplete}
+        // onRegionChangeComplete={e => onRegionChangeComplete(e.nativeEvent)}
         style={{ width: "100%", height: "100%", position: "relative" }}
-        region={currentRegion}
+        initialRegion={currentRegion}
         moveOnMarkerPress={false}
         // onPress={(e) => onMapPress(e.nativeEvent)}
       >
@@ -158,21 +156,20 @@ const Map = (props) => {
                 latitude: marker.latitude,
                 longitude: marker.longitude,
               }}
-              anchor={{ x: 0.5, y: 0.5 }}
+              anchor={{ x: 0.5, y: 0.5 }} 
               title={` ul. ${marker.street ? marker.street : ""}, ${
                 marker.city ? marker.city : ""
               }`}
             >
-              {console.log(marker.report.is_tracks)}
               {marker.report.is_tracks !== 0 ? (
                 <Image
                   source={require("../../assets/footprints/footprints.png")}
-                  style={{ height: 80, width: 80 }}
+                  style={{ height: 40, width: 40 }}
                 />
               ) : (
                 <Image
                   source={require("../../assets/logo/logo.png")}
-                  style={{ height: 80, width: 80 }}
+                  style={{ height: 40, width: 40 }}
                 />
               )}
             </Marker>
