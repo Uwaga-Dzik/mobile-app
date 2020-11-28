@@ -49,7 +49,7 @@ const StyledIcon = styled.Image`
     margin-top: 4px;
 `;
 
-const MarkerDialog = ({ marker }) => {
+const MarkerDialog = ({marker, onCloseClicked}) => {
 
     const groupSize = () => {
         if (marker.report.size === 0) return "mała";
@@ -61,22 +61,24 @@ const MarkerDialog = ({ marker }) => {
         <StyledView>
             <StyledTextsContainer>
                 <StyledTexts>
-                    <StyledIcon source={require("../../assets/icons/icon_location.png")} style={{resizeMode: 'contain'}} />
+                    <StyledIcon source={require("../../assets/icons/icon_location.png")}
+                                style={{resizeMode: 'contain'}}/>
                     <StyledTextBold>Adres:</StyledTextBold><StyledText>{` ul. ${marker.street ? marker.street : ''}, ${marker.city ? marker.city : ''}`}</StyledText>
                 </StyledTexts>
                 <StyledTexts>
-                    <StyledIcon source={require("../../assets/icons/icon_numbers.png")} />
+                    <StyledIcon source={require("../../assets/icons/icon_numbers.png")}/>
                     <StyledTextBold>Rozmiar grupy:</StyledTextBold><StyledText> {groupSize()}</StyledText>
                 </StyledTexts>
                 <StyledTexts>
-                    <StyledIcon source={require("../../assets/icons/icon_boar.png")} />
-                    <StyledTextBold>Występowanie młodych:</StyledTextBold><StyledText> {marker.report && marker.report.with_children ? marker.report.with_children : "nie"}</StyledText>
+                    <StyledIcon source={require("../../assets/icons/icon_boar.png")}/>
+                    <StyledTextBold>Występowanie
+                        młodych:</StyledTextBold><StyledText> {marker.report && marker.report.with_children ? marker.report.with_children : "nie"}</StyledText>
                 </StyledTexts>
             </StyledTextsContainer>
 
-            <StyledButton>
-                <StyledButtonText>Potwierdź występowanie</StyledButtonText>
-            </StyledButton>
+                <StyledButton onPress={() => onCloseClicked()}>
+                    <StyledButtonText>Zamknij</StyledButtonText>
+                </StyledButton>
         </StyledView>
     );
 };
