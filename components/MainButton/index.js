@@ -7,12 +7,17 @@ const StyledButton = styled.TouchableOpacity`
     isGreen
       ? ({ theme }) => theme.colors.green
       : ({ theme }) => theme.colors.orange};
-  padding: 25px 30px;
+  padding: 10px 30px;
   border: none;
   border-radius: 18px;
   font-weight: ${({ theme }) => theme.fonts.bold};
   font-size: 16px;
   z-index: -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 
   ${({ theme }) => theme.mixins.center}
 
@@ -27,22 +32,41 @@ const StyledLabel = styled.Text`
   font-size: 22px;
 `;
 
-const MainButton = ({ isGreen, text }) => {
+const StyledIcon = styled.Image`
+  margin: 0;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+`;
+
+const MainButton = ({ isGreen, text, hasIcon, isBoar }) => {
   return (
     <StyledButton isGreen={isGreen}>
       <StyledLabel>{text}</StyledLabel>
+      {hasIcon &&
+        (isBoar ? (
+          <StyledIcon source={require("../../assets/logo/logo.png")} />
+        ) : (
+          <StyledIcon
+            source={require("../../assets/footprints/footprints.png")}
+          />
+        ))}
     </StyledButton>
   );
 };
 
 MainButton.propTypes = {
   isGreen: PropTypes.bool,
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  hasIcon: PropTypes.bool,
+  isBoar: PropTypes.bool,
 };
 
 MainButton.defaultProps = {
   isGreen: true,
   text: "",
+  hasIcon: false,
+  isBoar: true,
 };
 
 export default MainButton;

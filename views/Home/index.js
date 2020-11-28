@@ -21,8 +21,18 @@ const Home = () => {
     <View>
       <Map />
       <StyledButtonContainer>
-        <MainButton isGreen={true} text={"Widzę dzika"} />
-        <MainButton isGreen={false} text={"Widzę ślady"} />
+        <MainButton
+          isGreen={true}
+          text={"Widzę dziki"}
+          hasIcon={true}
+          isBoar={true}
+        />
+        <MainButton
+          isGreen={false}
+          text={"Widzę ślady"}
+          hasIcon={true}
+          isBoar={false}
+        />
       </StyledButtonContainer>
     </View>
   );
