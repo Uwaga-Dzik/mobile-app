@@ -156,7 +156,7 @@ const Map = (props) => {
                 latitude: marker.latitude,
                 longitude: marker.longitude,
               }}
-              anchor={{ x: 0.5, y: 0.5 }} 
+              anchor={{ x: 0.5, y: 0.5 }}
               title={` ul. ${marker.street ? marker.street : ""}, ${
                 marker.city ? marker.city : ""
               }`}
