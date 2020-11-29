@@ -2,7 +2,7 @@
 Mobile app to adding and checking boar localizations. This project was created under Hackathon [HackYeah](https://hackyeah.pl/).
 
 ## Table of contents
-* [Demo video](#demo)
+* [Demo video](#demo video)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
