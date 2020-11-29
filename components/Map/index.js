@@ -42,11 +42,6 @@ const Map = (props) => {
             setShowMap(true);
         })();
 
-        setTimeout(() => {
-            fetchMarkers();
-
-        }, 30000);
-
         // setup location subscriber
         // let removeLocationSubscriber;
         // Location.watchPositionAsync(GEOLOCATION_OPTIONS, locationChanged).then(
@@ -125,7 +120,7 @@ const Map = (props) => {
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsPointsOfInterest={false}
-        followsUserLocation={true}
+        // followsUserLocation={true}
         pitchEnabled={false}
         toolbarEnabled={false}
         rotateEnabled={false}
