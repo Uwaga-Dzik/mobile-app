@@ -7,7 +7,7 @@ Mobile app to adding and checking boar localizations. This project was created u
 * [Setup](#setup)
 
 ## Demo video
-[!Link to demo video](https://www.youtube.com/watch?v=IpjO-MXOHNI)
+[Link to demo video](https://www.youtube.com/watch?v=IpjO-MXOHNI)
 
 ## Technologies
 Project is created with:
