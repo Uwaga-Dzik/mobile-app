@@ -19,52 +19,46 @@ const Map = (props) => {
 
   const mapRef = useRef();
 
-    useEffect(() => {
-        (async () => {
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== "granted") {
+        alert("Permission to access location was denied");
+      }
 
-            let {status} = await Location.requestPermissionsAsync();
-            if (status !== "granted") {
-                alert("Permission to access location was denied");
-            }
+      let location = await Location.getCurrentPositionAsync();
+      props.setLocation(location.coords);
+      const newRegion = Object.assign(
+        {
+          latitudeDelta: 0.007,
+          longitudeDelta: 0.007,
+        },
+        location.coords
+      );
 
-            let location = await Location.getCurrentPositionAsync();
-            props.setLocation(location.coords);
-            const newRegion = Object.assign(
-                {
-                    latitudeDelta: 0.007,
-                    longitudeDelta: 0.007,
-                },
-                location.coords
-            );
+      setCurrentRegion(newRegion);
+      setLastLoadedCords(location.coords);
+      setShowMap(true);
+    })();
 
-            setCurrentRegion(newRegion);
-            setLastLoadedCords(location.coords);
-            setShowMap(true);
-        })();
+    // setup location subscriber
+    // let removeLocationSubscriber;
+    // Location.watchPositionAsync(GEOLOCATION_OPTIONS, locationChanged).then(
+    //     (res) => {
+    //         removeLocationSubscriber = res.remove;
+    //     }
+    // );
 
-        setTimeout(() => {
-            fetchMarkers();
+    // return () => {
+    //     removeLocationSubscriber();
+    // };
+  }, []);
 
-        }, 30000);
-
-        // setup location subscriber
-        // let removeLocationSubscriber;
-        // Location.watchPositionAsync(GEOLOCATION_OPTIONS, locationChanged).then(
-        //     (res) => {
-        //         removeLocationSubscriber = res.remove;
-        //     }
-        // );
-
-        // return () => {
-        //     removeLocationSubscriber();
-        // };
-    }, []);
-
-    useEffect(() => {
-        if (props.map.lat !== 0 && props.map.lng !== 0) {
-            animateToRegion(props.map.lat, props.map.lng, 100);
-        }
-    }, [props.map]);
+  useEffect(() => {
+    if (props.map.lat !== 0 && props.map.lng !== 0) {
+      animateToRegion(props.map.lat, props.map.lng, 100);
+    }
+  }, [props.map]);
 
   const fetchMarkers = () => {
     // fetch markers
@@ -83,17 +77,19 @@ const Map = (props) => {
     fetchMarkers();
   };
 
-    const onMapPress = (event) => {
-        API.post('/report', {
-            latitude: event.coordinate.latitude,
-            longitude: event.coordinate.longitude,
-        }).then(() => {
-            fetchMarkers();
-        }).catch((e) => {
-            console.log(e);
-            alert("Wystąpił błąd podczas pobierania zgłoszeń");
-        })
-    };
+  const onMapPress = (event) => {
+    API.post("/report", {
+      latitude: event.coordinate.latitude,
+      longitude: event.coordinate.longitude,
+    })
+      .then(() => {
+        fetchMarkers();
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Wystąpił błąd podczas pobierania zgłoszeń");
+      });
+  };
 
   const animateToRegion = (latitude, longitude, TIME = 500) => {
     const newRegion = {
@@ -106,16 +102,16 @@ const Map = (props) => {
     mapRef.current.animateToRegion(newRegion, TIME);
   };
 
-    const onMarkerPress = (event, marker) => {
-        animateToRegion(marker.latitude - 0.0015, marker.longitude, 500);
+  const onMarkerPress = (event, marker) => {
+    animateToRegion(marker.latitude - 0.0015, marker.longitude, 500);
 
-            if (props.showMarkerDialog && props.selectedMarker.id === marker.id) {
-                props.setShowMarkerDialog(false);
-            } else {
-                props.onMarkerClick(marker);
-                props.setShowMarkerDialog(true);
-            }
-    };
+    if (props.showMarkerDialog && props.selectedMarker.id === marker.id) {
+      props.setShowMarkerDialog(false);
+    } else {
+      props.onMarkerClick(marker);
+      props.setShowMarkerDialog(true);
+    }
+  };
 
   if (showMap) {
     return (
@@ -125,7 +121,7 @@ const Map = (props) => {
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsPointsOfInterest={false}
-        followsUserLocation={true}
+        // followsUserLocation={true}
         pitchEnabled={false}
         toolbarEnabled={false}
         rotateEnabled={false}
