@@ -1,23 +1,30 @@
 import React from "react";
-import { Text } from "react-native";
 import styled from "styled-components";
 import Menu from "../Menu";
+import Search from "../Search";
 
 const StyledHeader = styled.View`
-  /* width: 100%; */
-  height: 8%;
   display: flex;
   flex-direction: row;
   margin: 0 15px;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 10px 0;
 `;
 
-const Header = () => {
+const StyledLogo = styled.Image`
+  height: 50px;
+  margin-left: -40px;
+`;
+
+const Header = ({ isOpen, setIsOpen }) => {
   return (
     <StyledHeader>
-      <Text>Logo</Text>
-      <Text>Search...</Text>
-      <Menu />
+      <StyledLogo
+        source={require("../../assets/logo/logo-text.png")}
+        style={{ resizeMode: "contain" }}
+      />
+      <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
     </StyledHeader>
   );
 };
